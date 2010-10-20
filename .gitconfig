@@ -1,0 +1,34 @@
+[user]
+	email = tanghaibao@gmail.com
+	name = Haibao Tang
+
+[alias]
+    ci = commit -a
+    co = checkout
+    st = status -a
+    ls = ls-files
+    rm = rm --cached
+    outgoing = log origin/master..
+    
+    logy = log --since='2 days ago'
+    logw = log --since='1 week ago'
+	unadd = reset HEAD
+
+[apply]
+    whitespace = strip
+
+[diff]
+    color = auto
+    renames = true
+
+[pager]
+    color = true
+
+[status]
+    color = auto
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+    ui = auto
