@@ -12,6 +12,8 @@ set expandtab
 set number
 
 set tags=tags;/
+" fix backspace won't move from current line
+set backspace=indent,eol,start
 
 filetype on
 filetype indent on

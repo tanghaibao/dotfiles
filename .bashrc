@@ -13,8 +13,11 @@ bind '"\e[A"':history-search-backward
 bind '"\e[B"':history-search-forward
 
 # active project
-alias dd="cd ${HOME}/projects/brassica/"
-alias damon='cd ${HOME}/projects/damon/domesticated_mules'
+alias bo="cd /usr/local/projects/BOG/htang"
+alias bog="cd /usr/local/archive/projects/BOG"
+alias mt="cd /usr/local/projects/MTG4/htang"
+alias mtg3="cd /usr/local/projects/mtg3"
+alias mtg="cd /usr/local/archive/projects/MTG"
 
 #eval `dircolors ~/.dir_colors`
 alias ls='ls -t --color=auto'
@@ -27,7 +30,6 @@ alias configure='configure --prefix=$HOME'
 alias vi='vim -X'
 alias readme='rst2html.py README.rst >README.html'
 alias dos2unix='col -bx <'
-alias ps='ps -U bao'
 alias al='cd ~/projects/alignments'
 alias ba='vi ~/.bashrc && bash'
 alias va='vi ~/.vimrc'
@@ -45,12 +47,13 @@ if [ -f /etc/bashrc ]; then
    . /etc/bashrc
 fi
 
+export PRINTER=p5f2d
 export MACHTYPE=i486
 export PHRED_PARAMETER_FILE=/usr/local/genome/lib/phredpar.dat
 export CROSS_MATCH_VECTOR=${HOME}/data/vectors/vector.seq
-export PATH=$PATH:.:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts
+export PATH=$PATH:.:/usr/local/projects/tgi/bin/:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts
 export HAXE_LIBRARY_PATH=${HOME}/lib/haxe/std:.
-export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:.
+export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:${HOME}/lib/:.
 export WISECONFIGDIR=${HOME}/software/wise2.2.0/wisecfg
 export MAGICK_HOME=${HOME}
 export HDF5_DIR=${HOME}
@@ -76,17 +79,15 @@ export PATH=${PATH}:~/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/b
 export GAP=${HOME}/code/google_appengine
 
 alias ns='netstat -antuwp | grep "^tcp.*LISTEN"'
-alias chibba='ssh chibba.agtec.uga.edu -XYC'
-alias new='ssh 169.229.192.214 -XYC'
-alias biocon='ssh biocon.berkeley.edu -XYC'
-alias rcluster='ssh rcluster.rcc.uga.edu -XYC'
-alias toxic='ssh toxic.berkeley.edu -XYC'
-alias synteny='ssh synteny.cnr.berkeley.edu -XYC'
-alias synlog='ssh syntelog.com -XYC'
-alias homer='ssh homer.cnr.berkeley.edu -XYC'
+alias chibba='ssh -l bao chibba.agtec.uga.edu -XYC'
+alias biocon='ssh -l bao biocon.berkeley.edu -XYC'
+alias rcluster='ssh -l bao rcluster.rcc.uga.edu -XYC'
+alias toxic='ssh -l bao toxic.berkeley.edu -XYC'
+alias synteny='ssh -l bao synteny.cnr.berkeley.edu -XYC'
+alias synlog='ssh -l bao syntelog.com -XYC'
+alias homer='ssh -l bao homer.cnr.berkeley.edu -XYC'
 alias perlib='cd /usr/lib/perl5/site_perl'
 alias mydb='cd /usr/lib/perl5/site_perl/CNS/MyDB'
-alias coge='cd /opt/apache/CoGe'
 alias seqret='java -jar ~/bin/readseq.jar'
 alias gobe="cd ${HOME}/public_html/gobe"
 alias apache='sudo /opt/apache2/bin/apachectl'

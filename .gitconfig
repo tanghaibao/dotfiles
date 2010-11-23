@@ -5,7 +5,6 @@
 [alias]
     ci = commit -a
     co = checkout
-    st = status -a
     ls = ls-files
     rm = rm --cached
     outgoing = log origin/master..
