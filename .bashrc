@@ -13,13 +13,24 @@ bind '"\e[A"':history-search-backward
 bind '"\e[B"':history-search-forward
 
 # active project
-alias bo="cd /usr/local/projects/BOG/htang"
-alias bog="cd /usr/local/archive/projects/BOG"
-alias mt="cd /usr/local/projects/MTG4/htang"
-alias mtg3="cd /usr/local/projects/mtg3"
-alias mtg="cd /usr/local/archive/projects/MTG"
+PROJ="/usr/local/projects"
+ARCHIVE="/usr/local/archive/projects"
+BOG="$PROJ/BOG"
+MTG3="$PROJ/MTG3"
+MTG4="$PROJ/MTG4"
+alias bo="cd $BOG/htang"
+alias mt="cd $MTG4/htang"
+alias current="cd $MTG3/IMGAG3.5/PSEUDOMOLECULE_BUILD/CURRENT"
+alias mtg3="cd $MTG3"
+alias qsub='qsub -P 04048 -cwd'
+alias scratch="cd $HOME/scratch"
 
-#eval `dircolors ~/.dir_colors`
+# Import CentOS grid settings
+SGE=/usr/local/sge_current/jcvi/common/settings.sh
+if [ -r "$SGE" ]; then . $SGE; else echo "Missing $SGE - contact sysadmin."; fi
+
+alias grid='python -m jcvi.apps.grid'
+
 alias ls='ls -t --color=auto'
 alias more='less'
 alias du='du -sh *'
@@ -53,7 +64,7 @@ export PHRED_PARAMETER_FILE=/usr/local/genome/lib/phredpar.dat
 export CROSS_MATCH_VECTOR=${HOME}/data/vectors/vector.seq
 export PATH=$PATH:.:/usr/local/projects/tgi/bin/:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts
 export HAXE_LIBRARY_PATH=${HOME}/lib/haxe/std:.
-export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:${HOME}/lib/:.
+export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:${HOME}/code/:.
 export WISECONFIGDIR=${HOME}/software/wise2.2.0/wisecfg
 export MAGICK_HOME=${HOME}
 export HDF5_DIR=${HOME}
@@ -73,6 +84,10 @@ export CLASSPATH=$CLASSPATH:${HOME}/lib/weka.jar:${HOME}/lib/weka/mysql-connecto
 export MYSQLLIBS=`mysql_config --libs`
 export MYSQLINC=/usr/include/mysql
 
+# scipy dependency
+#export ATLAS=${HOME}
+#export BLAS=${HOME}
+
 export TMOUT=0
 #export DISPLAY=${REMOTEHOST}:0.0
 export PATH=${PATH}:~/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/bin:~/perl:.:/sbin:/usr/sbin
@@ -88,7 +103,7 @@ alias synlog='ssh -l bao syntelog.com -XYC'
 alias homer='ssh -l bao homer.cnr.berkeley.edu -XYC'
 alias perlib='cd /usr/lib/perl5/site_perl'
 alias mydb='cd /usr/lib/perl5/site_perl/CNS/MyDB'
-alias seqret='java -jar ~/bin/readseq.jar'
+#alias seqret='java -jar ~/bin/readseq.jar'
 alias gobe="cd ${HOME}/public_html/gobe"
 alias apache='sudo /opt/apache2/bin/apachectl'
 alias makeperl='perl Makefile.PL lib=/usr/lib/perl5/site_perl'

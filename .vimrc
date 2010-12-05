@@ -25,6 +25,13 @@ autocmd BufRead *.hx set filetype=actionscript
 highlight flicker cterm=bold ctermfg=green
 au CursorMoved <buffer> exe 'match flicker /\V\<'.escape(expand('<cword>'), '/').'\>/'
 
+" Uncomment the following to have Vim jump to the last position when
+" " reopening a file
+if has("autocmd")
+   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal g'\"" | endif
+endif
+
 map ,x :x<CR>
 map ,q :q!<CR>
 map ,n :set nonumber<CR>
