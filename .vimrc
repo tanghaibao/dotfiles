@@ -1,5 +1,8 @@
 syntax on
 
+" this will allow paste'ing > 50 lines
+set viminfo='100,<100,s10,h
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4

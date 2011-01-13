@@ -43,7 +43,7 @@ export SHLIB_PATH=/usr/local/packages/sybase/lib:$SHLIB_PATH
 alias grid='python -m jcvi.apps.grid'
 
 alias ls='ls -t --color=auto'
-alias more='less'
+alias more='less -M'
 alias ddu='du -sh *'
 alias mongod='mongod -dbpath ~/db/mongod/'
 alias easy_install='easy_install -UZ --prefix=$HOME'
@@ -74,18 +74,19 @@ export PRINTER=p5f2d
 export MACHTYPE=i486
 export PHRED_PARAMETER_FILE=/usr/local/genome/lib/phredpar.dat
 export CROSS_MATCH_VECTOR=${HOME}/data/vectors/vector.seq
-export PATH=.:${PATH}:/usr/local/projects/tgi/bin/:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts:$SCRATCH/bin:/usr/local/common/
+PATH=.:${PATH}:/usr/local/projects/tgi/bin/:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts:$SCRATCH/bin:/usr/local/common/:/usr/local/packages/clc-ngs-cell:/usr/local/packages/CA/bin/
+export PATH
 export HAXE_LIBRARY_PATH=${HOME}/lib/haxe/std:.
 export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:${HOME}/code/:.
 export WISECONFIGDIR=${HOME}/software/wise2.2.0/wisecfg
 export MAGICK_HOME=${HOME}
-export HDF5_DIR=${HOME}
+export HDF5_DIR=${HOME}/bin/hdf5
 export ACEDB_MACHINE=LINUX_GTK2_4
 export INPUTRC=${HOME}/.inputrc
 export JYTHON_HOME=${HOME}/lib/jython2.5.2b1/
 
 # Compiler specific
-export LD_LIBRARY_PATH=${HOME}/lib:${HOME}/lib64/R:$SCRATCH/lib
+export LD_LIBRARY_PATH=${HOME}/lib:${HOME}/lib64/R:$SCRATCH/lib:$LD_LIBRARY_PATH
 #export CFLAGS=-I${HOME}/include
 export CPPFLAGS=${CFLAGS}
 #export LDFLAGS="-L${LD_LIBRARY_PATH} -lm"

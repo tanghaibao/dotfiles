@@ -1,0 +1,38 @@
+# aliases for T-SQL commands
+\alias statson='\loop -e "set statistics io on set statistics time on"'
+\alias statsoff='\loop -e "set statistics io off set statistics time off"'
+\alias planon='\loop -e "set showplan on"'
+\alias planoff='\loop -e "set showplan off"'
+\alias ton='\loop -e "dbcc traceon(3604)"'
+\alias toff='\loop -e "dbcc traceoff(3604)"'
+\alias tmp='\loop -e "use tempdb"'
+\alias mas='\loop -e "use master"'
+\alias ssp='\loop -e "use sybsystemprocs"'
+
+# aliases for sqsh commands
+\alias h='\history'
+\alias xx='\reset'
+\alias rr='\reconnect -S SYBPROD -Phtang9'
+
+\set history_shorthand=1
+\set histsize=500
+\alias v="\go -m vert !* | less"
+\alias l="\go !* | less"
+\set style=bcp
+\set bcp_colsep="   "
+\alias c="\shell clear"
+
+\set banner=no
+\set username="htang"
+\set password="htang9"
+\set hostname="SYBPROD"
+\set history_shorthand=on
+\set statistics=off
+\set semicolon_hack=on
+\set database=mta1pseudos
+\set style="bcp"
+\alias clear="\shell clear"
+\alias r="\buf-load "
+\alias sh="\shell "                  
+\alias gob="\go -m bcp"
+\alias goh="\go -m hor"
