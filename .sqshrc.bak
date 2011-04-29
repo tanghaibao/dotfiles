@@ -12,7 +12,6 @@
 # aliases for sqsh commands
 \alias h='\history'
 \alias xx='\reset'
-\alias rr='\reconnect -S SYBPROD -Phtang9'
 
 \set history_shorthand=1
 \set histsize=500
@@ -23,9 +22,9 @@
 \alias c="\shell clear"
 
 \set banner=no
-\set username="htang"
-\set password="htang9"
-\set hostname="SYBPROD"
+\set username=""
+\set password=""
+\set hostname=""
 \set history_shorthand=on
 \set statistics=off
 \set semicolon_hack=on

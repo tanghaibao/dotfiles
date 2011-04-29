@@ -13,6 +13,7 @@ set autoindent
 set smartindent
 set expandtab
 set number
+set ruler
 
 set tags=tags;/
 " fix backspace won't move from current line
