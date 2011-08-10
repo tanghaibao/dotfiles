@@ -2,150 +2,177 @@
 # important to carry out group permission settings... (bct 12/3/04)
 umask 002
 
-# User specific aliases and functions
-PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\](\w) \$ \[\033[00m\]'
+# This prevents the PATH getting nested when bashrc sourced more than once
+unset PATH
 
-shopt -s histappend
-export PROMPT_COMMAND='history -a'
-
-# These set up/down to do the history searching
-bind '"\e[A"':history-search-backward
-bind '"\e[B"':history-search-forward
-
-# active project
+# Active project
 PROJ="/usr/local/projects"
 ARCHIVE="/usr/local/archive/projects"
+SCRATCH="/usr/local/scratch/htang"
 BOG="$PROJ/BOG"
 MTG3="$PROJ/MTG3"
 MTG4="$PROJ/MTG4"
-SCRATCH="/usr/local/scratch/htang"
-alias bo="cd $BOG/htang"
-alias mt="cd $MTG4/htang"
-alias current="cd $MTG3/IMGAG3.5/PSEUDOMOLECULE_BUILD/CURRENT"
-alias mtg3="cd $MTG3"
-alias qsub='qsub -P 04048 -cwd'
-alias qlogin='qlogin -P 04048'
-alias sqsh='sqsh -S SYBPROD'
-alias scratch="cd $SCRATCH"
-alias samtools='$HOME/bin/samtools'
-alias java='java-1.6.0 -Xmx2g'
-alias cp='cp -p'
 
-CA="$HOME/bin/Linux-amd64/bin"
-alias runCA='$CA/runCA'
-alias gatekeeper='$CA/gatekeeper'
-
-# Import CentOS grid settings
-SGE=/usr/local/sge_current/jcvi/common/settings.sh
-if [ -r "$SGE" ]; then . $SGE; else echo "Missing $SGE - contact sysadmin."; fi
-
-# Import Sybase settings
-export SYBASE=/usr/local/packages/sybase
-export LD_LIBRARY_PATH=/usr/local/packages/sybase/lib:$LD_LIBRARY_PATH
-export SHLIB_PATH=/usr/local/packages/sybase/lib:$SHLIB_PATH
-
-# Ruby gem install
-export GEM_HOME=$HOME/lib
-
-alias grid='python -m jcvi.apps.grid'
-alias fasta='python -m jcvi.formats.fasta'
-
-alias ls='ls -t --color=auto'
-alias more='less -M'
-alias ddu='du -sh *'
-alias mongod='mongod -dbpath ~/db/mongod/'
-alias easy_install='easy_install -UZ --prefix=$HOME'
-alias easy_uninstall='easy_install -mxN'
-alias configure='configure --prefix=$SCRATCH'
-alias vi='vim -X'
-alias readme='rst2html.py README.rst >README.html'
-alias dos2unix='col -bx <'
-alias al='cd ~/projects/alignments'
-alias ba='vi ~/.bashrc && bash'
-alias va='vi ~/.vimrc'
-alias qa='cd ~/projects/quota-alignment'
-alias ch='chmod u+x'
-alias ftp='ftp -i'
-alias pysrc='cd ~/lib/python2.6/site-packages'
-alias ac='aclocal && autoconf && touch NEWS README AUTHORS ChangeLog && automake --add-missing'
-alias astyle='astyle --style=ansi --convert-tabs'
-alias grep='grep --color'
-alias jipython='jython /home/bao/lib/jython2.5.2b1/ipython-0.9.1/ipython.py'
-alias igv='java -Xmx1000m -Djava.library.path=/export/lab/IGV_1.5.44/native/linux-64 -jar /export/lab/IGV_1.5.44/igv.jar'
+# Gigantic path
+PATH=/usr/local/projects/tgi/bin:/usr/local/common:$PATH
+PATH=/usr/local/devel/BCIS/external_software/clc-assembly-cell-4.0.1beta-linux_64:$PATH
+PATH=$HOME/bin/java/jdk1.6.0_13/bin:$PATH
+PATH=$HOME/bin/gepard-1.30/:$PATH
+PATH=$HOME/bin/FastQC/:$PATH
+PATH=/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/bin:/sbin:/usr/sbin:$PATH
+PATH=.:$HOME/bin:$HOME/bin/$MACHTYPE:$HOME/bin/Linux-amd64/bin:$SCRATCH/bin:$PATH
+export PATH
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
    . /etc/bashrc
 fi
 
+# User specific aliases and functions
+PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\](\w) \$ \[\033[00m\]'
+
+# Ignore small spelling mistakes in directory names
+shopt -s cdspell
+# Multiple line commands stay together in the history
+shopt -s cmdhist
+# Verify command before running it
+shopt -s histverify
+# Auto correct the case
+shopt -s nocaseglob
+shopt -s extglob
+shopt -s nullglob dotglob
+shopt -s checkhash
+shopt -s cdable_vars
+shopt -s no_empty_cmd_completion
+
+# These set up/down to do the history searching
+bind '"\e[A"':history-search-backward
+bind '"\e[B"':history-search-forward
+
+# Don't put duplicate lines in the history
+export HISTCONTROL=ignoreboth:erasedups    # ignore and erase duplicate entries
+
+# Big big history
+export HISTSIZE=100000
+
+# Make bash append the history rather than overwrite it
+shopt -s histappend       # append to history, don't overwrite it
+
+# Ignore some of the common commands
+export HISTIGNORE="&:ls:[bf]g:exit:ll:la:l:cd:pwd:su:df:clear:cd ..:history"
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# Import CentOS grid settings
+SGE=/usr/local/sge_current/jcvi/common/settings.sh
+if [ -r "$SGE" ]; then . $SGE; else echo "Missing $SGE - contact sysadmin."; fi
+
+# Use environment, i.e. use java160
+use () { eval `/usr/local/packages/usepackage/bin/usepackage -b $*` ; }
+
+alog () { command tail -f /opt/apache/logs/`date "+%Y/%m/%d"`/errors.log ; }
+blog () { command tail -f /opt/apache/logs/`date "+%Y/%m/%d"`/access.log ; }
+aless () { command less /opt/apache/logs/`date "+%Y/%m/%d"`/errors.log ; }
+
+# Compiler
+alias makeperl='perl Makefile.PL lib=/usr/lib/perl5/site_perl'
+alias mpmi='makeperl; make install'
+alias mpmix='perl Makefile.PL; make install'
+alias easy_install='easy_install -UZ --prefix=$HOME'
+alias easy_uninstall='easy_install -mxN'
+alias configure='configure --prefix=$SCRATCH'
+alias make='make -j 16'
+
+# My Python utility programs
+alias grid='python -m jcvi.apps.grid'
+alias fasta='python -m jcvi.formats.fasta'
+alias agp='python -m jcvi.formats.agp'
+alias unitig='python -m jcvi.assembly.unitig'
+
+alias qsub='qsub -P 04048 -cwd'
+alias qlogin='qlogin -P 04048'
+alias sqsh='sqsh -S SYBPROD'
+alias java='java-1.6.0 -Xmx2g'
+alias cp='cp -p'
+
+alias ls='ls -t --color=auto'
+alias more='less -M -R'
+alias vi='vim -X'
+alias readme='rst2html.py README.rst > README.html'
+alias dos2unix='col -bx <'
+alias ba='vi ~/.bashrc && bash'
+alias va='vi ~/.vimrc'
+alias ch='chmod u+x'
+alias ftp='ftp -i'
+alias ac='aclocal && autoconf && touch NEWS README AUTHORS ChangeLog && automake --add-missing'
+alias astyle='astyle --style=ansi --convert-tabs'
+alias grep='grep --color'
+alias igv='java -Djava.library.path=/export/lab/IGV_1.5.44/native/linux-64 -jar /export/lab/IGV_1.5.44/igv.jar'
+#alias seqret='java -jar ~/bin/readseq.jar'
+
 export PRINTER=p5f2d
 export MACHTYPE=i486
 export PHRED_PARAMETER_FILE=/usr/local/genome/lib/phredpar.dat
-export CROSS_MATCH_VECTOR=${HOME}/data/vectors/vector.seq
-PATH=.:${PATH}:/usr/local/projects/tgi/bin/:/usr/local/blast/bin:/usr/local/blast/data:/usr/local/genome/bin:${HOME}/bin/${MACHTYPE}:${HOME}/bin:${HOME}/software:${HOME}/bin/java/jdk1.6.0_13/bin:${HOME}/scripts:$SCRATCH/bin:/usr/local/common/:/usr/local/packages/clc-ngs-cell:/usr/local/packages/CA/bin/
-PATH=$PATH:$HOME/bin/gepard-1.30/
-PATH=$PATH:$HOME/bin/Linux-amd64/bin/
-export PATH
-export HAXE_LIBRARY_PATH=${HOME}/lib/haxe/std:.
-export PYTHONPATH=${HOME}/lib/python2.6/site-packages/:${HOME}/code/:.
-export WISECONFIGDIR=${HOME}/software/wise2.2.0/wisecfg
-export MAGICK_HOME=${HOME}
-export HDF5_DIR=${HOME}/bin/hdf5
+export HAXE_LIBRARY_PATH=$HOME/lib/haxe/std:.
+export PYTHONPATH=$HOME/lib/python2.6/site-packages/:${HOME}/code/:.
 export ACEDB_MACHINE=LINUX_GTK2_4
-export INPUTRC=${HOME}/.inputrc
-export JYTHON_HOME=${HOME}/lib/jython2.5.2b1/
+export INPUTRC=$HOME/.inputrc
 
-# Compiler specific
+# Compiler
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/lib:${HOME}/lib64/R:$SCRATCH/lib
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/packages/gcc-4.4.3/lib64:/usr/local/packages/gcc-4.4.3/lib
 export LD_LIBRARY_PATH
 
 #export CFLAGS=-I${HOME}/include
-export CPPFLAGS=${CFLAGS}
-#export LDFLAGS="-L${LD_LIBRARY_PATH} -lm"
+#export CPPFLAGS=${CFLAGS}
+export LDFLAGS="-L${LD_LIBRARY_PATH} -lm"
 #export PKG_CONFIG_PATH=${SCRATCH}/lib/pkgconfig
-export CLASSPATH=$CLASSPATH:${HOME}/lib/weka.jar:${HOME}/lib/weka/mysql-connector-java-5.1.6-bin.jar:${HOME}/lib/biojava.jar:${HOME}/lib/libreadline-java.jar:${HOME}/lib/sam-1.32.jar
+export CLASSPATH=$CLASSPATH:$HOME/lib/biojava.jar:$HOME/lib/libreadline-java.jar:$HOME/lib/sam-1.32.jar
+
+export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib
+export EDITOR='/usr/bin/vim -X'
 
 # JKsrc dependency
-export MYSQLLIBS=`mysql_config --libs`
+MYSQLLIBS='mysql_config --libs'
+export MYSQLLIBS
 export MYSQLINC=/usr/include/mysql
 
 # scipy dependency
-export ATLAS=${HOME}/lib
-export BLAS=${HOME}/lib
+export ATLAS=$HOME/lib
+export BLAS=$HOME/lib
 
 export TMOUT=0
-#export DISPLAY=${REMOTEHOST}:0.0
-export PATH=${PATH}:~/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/bin:~/perl:.:/sbin:/usr/sbin
-export PATH=${PATH}:~/bin/FastQC/
-export GAP=${HOME}/code/google_appengine
+export DISPLAY=$REMOTEHOST:0.0
+export GAP=$HOME/code/google_appengine
 
-alias ns='netstat -antuwp | grep "^tcp.*LISTEN"'
+# Import Sybase settings
+export SYBASE=/usr/local/packages/sybase
+export LD_LIBRARY_PATH=/usr/local/packages/sybase/lib:$LD_LIBRARY_PATH
+export SHLIB_PATH=/usr/local/packages/sybase/lib:$SHLIB_PATH
+
+# OPENMP thread number
+export OMP_NUM_THREADS=32
+
+# Ruby gem install
+export GEM_HOME=$HOME/lib
+
+# Remote logins
+alias jcvica='ssh -l jcvica aafc-aac.usask.ca'
 alias iplant='ssh -l tanghaibao coge.iplantcollaborative.org -p 1657 -XYC'
-alias tera='ssh -l htang tg-login.ranger.tacc.teragrid.org -XYC'
+alias ranger='ssh -l htang ranger.tacc.teragrid.org -XYC'
+alias lonestar='ssh -l htang lonestar.tacc.teragrid.org -XYC'
 alias jupiter='ssh -l vkrishna jupiter.lmcg.wisc.edu -XYC'
 alias chibba='ssh -l bao chibba.agtec.uga.edu -XYC'
 alias biocon='ssh -l bao biocon.berkeley.edu -XYC'
 alias rcluster='ssh -l bao rcluster.rcc.uga.edu -XYC'
 alias toxic='ssh -l bao toxic.berkeley.edu -XYC'
 alias synteny='ssh -l bao synteny.cnr.berkeley.edu -XYC'
-alias synlog='ssh -l bao syntelog.com -XYC'
+alias syntelog='ssh -l bao syntelog.com -XYC'
 alias homer='ssh -l bao homer.cnr.berkeley.edu -XYC'
-alias perlib='cd /usr/lib/perl5/site_perl'
-alias mydb='cd /usr/lib/perl5/site_perl/CNS/MyDB'
-#alias seqret='java -jar ~/bin/readseq.jar'
-alias gobe="cd ${HOME}/public_html/gobe"
+
+# Network
 alias apache='sudo /opt/apache2/bin/apachectl'
-alias makeperl='perl Makefile.PL lib=/usr/lib/perl5/site_perl'
-alias mpmi='makeperl; make install'
-alias mpmix='perl Makefile.PL; make install'
-alias xt="(xterm ;)& (xterm ;)& (xterm ;)&"
-alias kdx="kd; xt"
+alias ns='netstat -antuwp | grep "^tcp.*LISTEN"'
 alias arr="echo 'restarting apache'; apache restart"
-alog () { command tail -f /opt/apache/logs/`date "+%Y/%m/%d"`/errors.log ; }
-blog () { command tail -f /opt/apache/logs/`date "+%Y/%m/%d"`/access.log ; }
-aless () { command less /opt/apache/logs/`date "+%Y/%m/%d"`/errors.log ; }
-export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib
-
-export EDITOR='/usr/bin/vim -X'
-
+alias mpmake='CC=/usr/local/packages/gcc-4.4.3/bin/g++ CXX=/usr/local/packages/gcc-4.4.3/bin/g++ make'
