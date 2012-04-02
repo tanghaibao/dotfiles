@@ -1,12 +1,6 @@
 " Syntax highlight
 syntax on
 
-filetype on
-filetype indent on
-filetype plugin on
-
-autocmd BufRead *.hx set filetype=actionscript
-
 " This will allow paste'ing > 50 lines
 set viminfo='100,<100,s10,h
 " Fix backspace won't move from current line
@@ -20,11 +14,17 @@ set textwidth=80
 
 set ignorecase
 set autoindent
-set autoread
 set smartindent
+set autoread
 set expandtab
 set number
 set ruler
+
+filetype on
+" filetype indent on
+filetype plugin on
+
+autocmd BufRead *.hx set filetype=actionscript
 
 " Highlight word under cursor
 highlight flicker cterm=bold ctermfg=green

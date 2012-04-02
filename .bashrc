@@ -4,6 +4,7 @@ umask 002
 
 # This prevents the PATH getting nested when bashrc sourced more than once
 unset PATH
+ulimit -s 100000
 
 # Active project
 PROJ="/usr/local/projects"
@@ -14,14 +15,22 @@ MTG3="$PROJ/MTG3"
 MTG4="$PROJ/MTG4"
 
 # Gigantic path
+export MACHTYPE=i486
 PATH=/usr/local/projects/tgi/bin:/usr/local/common:$PATH
-PATH=/usr/local/devel/BCIS/external_software/clc-assembly-cell-4.0.1beta-linux_64:$PATH
+#PATH=/usr/local/devel/BCIS/external_software/clc-assembly-cell-4.0.1beta-linux_64:$PATH
+PATH=/usr/local/packages/clc-ngs-cell:$PATH
 PATH=$HOME/bin/java/jdk1.6.0_13/bin:$PATH
 PATH=$HOME/bin/gepard-1.30/:$PATH
 PATH=$HOME/bin/FastQC/:$PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/bin:/sbin:/usr/sbin:$PATH
 PATH=.:$HOME/bin:$HOME/bin/$MACHTYPE:$HOME/bin/Linux-amd64/bin:$SCRATCH/bin:$PATH
 export PATH
+
+AUGUSTUS_CONFIG_PATH=$HOME/htang/export/augustus.2.5.5/config
+export AUGUSTUS_CONFIG_PATH
+PYTHONPATH=.:$HOME/lib/python2.6/site-packages/:$PYTHONPATH
+PYTHONPATH=$HOME/code:$PYTHONPATH
+export PYTHONPATH
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -82,13 +91,14 @@ alias mpmix='perl Makefile.PL; make install'
 alias easy_install='easy_install -UZ --prefix=$HOME'
 alias easy_uninstall='easy_install -mxN'
 alias configure='configure --prefix=$SCRATCH'
-alias make='make -j 16'
 
 # My Python utility programs
 alias grid='python -m jcvi.apps.grid'
 alias fasta='python -m jcvi.formats.fasta'
+alias gff='python -m jcvi.formats.gff'
 alias agp='python -m jcvi.formats.agp'
-alias unitig='python -m jcvi.assembly.unitig'
+alias goldenpath='python -m jcvi.assembly.goldenpath'
+alias fastq_to_fasta='fastq_to_fasta_fast'
 
 alias qsub='qsub -P 04048 -cwd'
 alias qlogin='qlogin -P 04048'
@@ -108,33 +118,41 @@ alias ftp='ftp -i'
 alias ac='aclocal && autoconf && touch NEWS README AUTHORS ChangeLog && automake --add-missing'
 alias astyle='astyle --style=ansi --convert-tabs'
 alias grep='grep --color'
-alias igv='java -Djava.library.path=/export/lab/IGV_1.5.44/native/linux-64 -jar /export/lab/IGV_1.5.44/igv.jar'
+IGV=/usr/local/projects/MTG4/htang/export/IGV_2.0.10
+alias igv='java -Xmx3g -Djava.library.path=${IGV} -jar ${IGV}/igv.jar'
 #alias seqret='java -jar ~/bin/readseq.jar'
 
 export PRINTER=p5f2d
-export MACHTYPE=i486
 export PHRED_PARAMETER_FILE=/usr/local/genome/lib/phredpar.dat
 export HAXE_LIBRARY_PATH=$HOME/lib/haxe/std:.
-export PYTHONPATH=$HOME/lib/python2.6/site-packages/:${HOME}/code/:.
 export ACEDB_MACHINE=LINUX_GTK2_4
 export INPUTRC=$HOME/.inputrc
 
+# use ANNOTATION_ENV
+export ANNOTATION_DIR=/usr/local/annotation
+
+# use EGC
+export ANNOT_DEVEL=/usr/local/devel/ANNOTATION
+export EGC_SCRIPTS=${ANNOT_DEVEL}/euk_genome_control/bin
+export EGC_UTILITIES=${ANNOT_DEVEL}/EGC_utilities/bin
+export EUK_MODULES=${ANNOT_DEVEL}/Euk_modules/bin
+
 # Compiler
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/lib:${HOME}/lib64/R:$SCRATCH/lib
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib:$HOME/lib64/R:$SCRATCH/lib
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/packages/gcc-4.4.3/lib64:/usr/local/packages/gcc-4.4.3/lib
 export LD_LIBRARY_PATH
 
-#export CFLAGS=-I${HOME}/include
-#export CPPFLAGS=${CFLAGS}
-export LDFLAGS="-L${LD_LIBRARY_PATH} -lm"
-#export PKG_CONFIG_PATH=${SCRATCH}/lib/pkgconfig
+#export CFLAGS=-I$HOME/include
+#export CPPFLAGS=$CFLAGS
+#export LDFLAGS="-L $SCRATCH/lib -lm"
+#export PKG_CONFIG_PATH=$SCRATCH/lib/pkgconfig
 export CLASSPATH=$CLASSPATH:$HOME/lib/biojava.jar:$HOME/lib/libreadline-java.jar:$HOME/lib/sam-1.32.jar
 
 export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib
 export EDITOR='/usr/bin/vim -X'
 
 # JKsrc dependency
-MYSQLLIBS='mysql_config --libs'
+MYSQLLIBS=`mysql_config --libs`
 export MYSQLLIBS
 export MYSQLINC=/usr/include/mysql
 
@@ -158,6 +176,7 @@ export OMP_NUM_THREADS=32
 export GEM_HOME=$HOME/lib
 
 # Remote logins
+alias qj='qjobstats -usage -timeline -owner htang > results.html'
 alias jcvica='ssh -l jcvica aafc-aac.usask.ca'
 alias iplant='ssh -l tanghaibao coge.iplantcollaborative.org -p 1657 -XYC'
 alias ranger='ssh -l htang ranger.tacc.teragrid.org -XYC'
@@ -170,9 +189,14 @@ alias toxic='ssh -l bao toxic.berkeley.edu -XYC'
 alias synteny='ssh -l bao synteny.cnr.berkeley.edu -XYC'
 alias syntelog='ssh -l bao syntelog.com -XYC'
 alias homer='ssh -l bao homer.cnr.berkeley.edu -XYC'
+alias towson='ssh -l jcvi biodatabases.towson.edu -XYC'
 
 # Network
 alias apache='sudo /opt/apache2/bin/apachectl'
 alias ns='netstat -antuwp | grep "^tcp.*LISTEN"'
 alias arr="echo 'restarting apache'; apache restart"
 alias mpmake='CC=/usr/local/packages/gcc-4.4.3/bin/g++ CXX=/usr/local/packages/gcc-4.4.3/bin/g++ make'
+
+umask 002
+# make linux sort correctly
+export LC_ALL="C"
