@@ -110,7 +110,7 @@ alias ls='ls -t --color=auto'
 alias more='less -M -R'
 alias vi='vim -X'
 alias readme='rst2html.py README.rst > README.html'
-alias dos2unix='col -bx <'
+alias dos2unix='col -b <'
 alias ba='vi ~/.bashrc && bash'
 alias va='vi ~/.vimrc'
 alias ch='chmod u+x'
@@ -136,6 +136,7 @@ export ANNOT_DEVEL=/usr/local/devel/ANNOTATION
 export EGC_SCRIPTS=${ANNOT_DEVEL}/euk_genome_control/bin
 export EGC_UTILITIES=${ANNOT_DEVEL}/EGC_utilities/bin
 export EUK_MODULES=${ANNOT_DEVEL}/Euk_modules/bin
+export EVM=$ANNOT_DEVEL/EVidenceModeler
 
 # Compiler
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib:$HOME/lib64/R:$SCRATCH/lib
@@ -148,7 +149,7 @@ export LD_LIBRARY_PATH
 #export PKG_CONFIG_PATH=$SCRATCH/lib/pkgconfig
 export CLASSPATH=$CLASSPATH:$HOME/lib/biojava.jar:$HOME/lib/libreadline-java.jar:$HOME/lib/sam-1.32.jar
 
-export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib
+export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib:$HOME/bin
 export EDITOR='/usr/bin/vim -X'
 
 # JKsrc dependency
@@ -170,7 +171,7 @@ export LD_LIBRARY_PATH=/usr/local/packages/sybase/lib:$LD_LIBRARY_PATH
 export SHLIB_PATH=/usr/local/packages/sybase/lib:$SHLIB_PATH
 
 # OPENMP thread number
-export OMP_NUM_THREADS=32
+export OMP_NUM_THREADS=64
 
 # Ruby gem install
 export GEM_HOME=$HOME/lib
@@ -178,7 +179,8 @@ export GEM_HOME=$HOME/lib
 # Remote logins
 alias qj='qjobstats -usage -timeline -owner htang > results.html'
 alias jcvica='ssh -l jcvica aafc-aac.usask.ca'
-alias iplant='ssh -l tanghaibao coge.iplantcollaborative.org -p 1657 -XYC'
+alias iplant='ssh -l tanghaibao coge.iplantc.org -p 1657 -XYC'
+alias geco='ssh -l tanghaibao geco.iplantc.org -p 1657 -XYC'
 alias ranger='ssh -l htang ranger.tacc.teragrid.org -XYC'
 alias lonestar='ssh -l htang lonestar.tacc.teragrid.org -XYC'
 alias jupiter='ssh -l vkrishna jupiter.lmcg.wisc.edu -XYC'
@@ -190,6 +192,7 @@ alias synteny='ssh -l bao synteny.cnr.berkeley.edu -XYC'
 alias syntelog='ssh -l bao syntelog.com -XYC'
 alias homer='ssh -l bao homer.cnr.berkeley.edu -XYC'
 alias towson='ssh -l jcvi biodatabases.towson.edu -XYC'
+alias papaya='ssh minglab@ming256.life.uiuc.edu -XYC'
 
 # Network
 alias apache='sudo /opt/apache2/bin/apachectl'
@@ -200,3 +203,4 @@ alias mpmake='CC=/usr/local/packages/gcc-4.4.3/bin/g++ CXX=/usr/local/packages/g
 umask 002
 # make linux sort correctly
 export LC_ALL="C"
+source .i-commands-auto.bash
