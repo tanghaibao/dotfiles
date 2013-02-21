@@ -203,4 +203,4 @@ alias mpmake='CC=/usr/local/packages/gcc-4.4.3/bin/g++ CXX=/usr/local/packages/g
 umask 002
 # make linux sort correctly
 export LC_ALL="C"
-source .i-commands-auto.bash
+source ${HOME}/.i-commands-auto.bash
