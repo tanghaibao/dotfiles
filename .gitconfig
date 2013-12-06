@@ -9,7 +9,7 @@
     rm = rm --cached
     st = status
     outgoing = log origin/master..
-    
+
     logy = log --since='2 days ago'
     logw = log --since='1 week ago'
 	unadd = reset HEAD

@@ -5,17 +5,21 @@ umask 002
 # This prevents the PATH getting nested when bashrc sourced more than once
 unset PATH
 ulimit -s 100000
+ulimit -u 10000
 
 # Active project
 PROJ="/usr/local/projects"
 ARCHIVE="/usr/local/archive/projects"
-SCRATCH="/usr/local/scratch/htang"
 BOG="$PROJ/BOG"
 MTG3="$PROJ/MTG3"
 MTG4="$PROJ/MTG4"
+#SCRATCH="/usr/local/scratch/htang"
+SCRATCH="$MTG4/htang"
+PACKAGES=/usr/local/packages
 
 # Gigantic path
 export MACHTYPE=i486
+PATH=$SCRATCH/export/MaSuRCA-2.0.3.1/bin/:$PATH
 PATH=/usr/local/projects/tgi/bin:/usr/local/common:$PATH
 #PATH=/usr/local/devel/BCIS/external_software/clc-assembly-cell-4.0.1beta-linux_64:$PATH
 PATH=/usr/local/packages/clc-ngs-cell:$PATH
@@ -23,12 +27,16 @@ PATH=$HOME/bin/java/jdk1.6.0_13/bin:$PATH
 PATH=$HOME/bin/gepard-1.30/:$PATH
 PATH=$HOME/bin/FastQC/:$PATH
 PATH=/usr/local/bin:/usr/bin:/bin:/opt/bin/bio:/usr/X11R6/bin:/sbin:/usr/sbin:$PATH
-PATH=.:$HOME/bin:$HOME/bin/$MACHTYPE:$HOME/bin/Linux-amd64/bin:$SCRATCH/bin:$PATH
+PATH=.:$HOME/bin:$HOME/bin/$MACHTYPE:$HOME/bin/Linux-amd64/bin:$PATH
+PATH=$SCRATCH/bin:$PATH
 export PATH
 
-AUGUSTUS_CONFIG_PATH=$HOME/htang/export/augustus.2.5.5/config
+#AUGUSTUS_CONFIG_PATH=$HOME/htang/export/augustus.2.5.5/config
+AUGUSTUS_CONFIG_PATH=$HOME/htang/export/maker/exe/augustus/config
 export AUGUSTUS_CONFIG_PATH
-PYTHONPATH=.:$HOME/lib/python2.6/site-packages/:$PYTHONPATH
+PYTHONPATH=.:${PACKAGES}/python/lib/python2.7/site-packages:$HOME/lib/python2.7/site-packages/:$HOME/lib/python2.6/site-packages
+#PYTHONPATH=$PYTHONPATH:~/htang/medicago/PacBio/smrtanalysis-1.4.0/analysis/lib/python2.7/
+PYTHONPATH=$SCRATCH/export/khmer/python:$PYTHONPATH
 PYTHONPATH=$HOME/code:$PYTHONPATH
 export PYTHONPATH
 
@@ -103,7 +111,7 @@ alias fastq_to_fasta='fastq_to_fasta_fast'
 alias qsub='qsub -P 04048 -cwd'
 alias qlogin='qlogin -P 04048'
 alias sqsh='sqsh -S SYBPROD'
-alias java='java-1.6.0 -Xmx2g'
+alias java='java -Xmx2g'
 alias cp='cp -p'
 
 alias ls='ls -t --color=auto'
@@ -111,7 +119,7 @@ alias more='less -M -R'
 alias vi='vim -X'
 alias readme='rst2html.py README.rst > README.html'
 alias dos2unix='col -b <'
-alias ba='vi ~/.bashrc && bash'
+alias ba='vi ~/.bashrc && source ~/.bashrc'
 alias va='vi ~/.vimrc'
 alias ch='chmod u+x'
 alias ftp='ftp -i'
@@ -137,19 +145,23 @@ export EGC_SCRIPTS=${ANNOT_DEVEL}/euk_genome_control/bin
 export EGC_UTILITIES=${ANNOT_DEVEL}/EGC_utilities/bin
 export EUK_MODULES=${ANNOT_DEVEL}/Euk_modules/bin
 export EVM=$ANNOT_DEVEL/EVidenceModeler
+export TRINITY_HOME=~/htang/export/trinityrnaseq_r2013-02-25/
+export CEGMA=~/htang/export/cegma_v2.4.010312
+export WISECONFIGDIR=/local/mtg4/htang/export/cegma_v2.4.010312/wise2.2.3-rc7/wisecfg/
 
 # Compiler
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib:$HOME/lib64/R:$SCRATCH/lib
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/packages/gcc-4.4.3/lib64:/usr/local/packages/gcc-4.4.3/lib
+LD_LIBRARY_PATH=${PACKAGES}/gcc-4.7.1/lib64/:/usr/lib64:${PACKAGES}/python/lib/:$LD_LIBRARY_PATH:$HOME/lib:$HOME/lib64/R:$SCRATCH/lib
 export LD_LIBRARY_PATH
+LD_RUN_PATH=$SCRATCH/lib
+export LD_RUN_PATH
 
 #export CFLAGS=-I$HOME/include
 #export CPPFLAGS=$CFLAGS
-#export LDFLAGS="-L $SCRATCH/lib -lm"
 #export PKG_CONFIG_PATH=$SCRATCH/lib/pkgconfig
+#export LDFLAGS="-L$SCRATCH/lib -lm"
 export CLASSPATH=$CLASSPATH:$HOME/lib/biojava.jar:$HOME/lib/libreadline-java.jar:$HOME/lib/sam-1.32.jar
 
-export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib:$HOME/bin
+export PERL5LIB=$HOME/lib/perl5:$SCRATCH/lib:$HOME/bin:/usr/local/devel/ANNOTATION/ard/ergatis-v2r13b2/libv2r10b1/perl5/
 export EDITOR='/usr/bin/vim -X'
 
 # JKsrc dependency
@@ -179,8 +191,9 @@ export GEM_HOME=$HOME/lib
 # Remote logins
 alias qj='qjobstats -usage -timeline -owner htang > results.html'
 alias jcvica='ssh -l jcvica aafc-aac.usask.ca'
-alias iplant='ssh -l tanghaibao coge.iplantc.org -p 1657 -XYC'
-alias geco='ssh -l tanghaibao geco.iplantc.org -p 1657 -XYC'
+alias coge='ssh -l tanghaibao coge.iplantc.org -p 1657 -XYC'
+alias geco='ssh -l tanghaibao geco.iplantc.org -p 1657'
+alias haroun='ssh -l tanghaibao haroun.iplantc.org -p 1657 -XYC'
 alias ranger='ssh -l htang ranger.tacc.teragrid.org -XYC'
 alias lonestar='ssh -l htang lonestar.tacc.teragrid.org -XYC'
 alias jupiter='ssh -l vkrishna jupiter.lmcg.wisc.edu -XYC'
@@ -204,3 +217,9 @@ umask 002
 # make linux sort correctly
 export LC_ALL="C"
 source ${HOME}/.i-commands-auto.bash
+
+SEYMOUR_HOME=/usr/local/devel/BCIS/PacBioSoftware/smrtanalysis-1.4.0/
+export SEYMOUR_HOME
+JELLYPATH=/usr/local/projects/MTG4/PacBio/PBJelly_12.9.14/
+export JELLYPATH
+#source $JELLYPATH/exportPaths.sh
