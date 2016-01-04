@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/tanghaibao/export/PBSuite_15.2.20/pbsuite/jelly'
+let g:netrw_dirhist_2='/home/tanghaibao/code/jcvi/annotation'
+let g:netrw_dirhist_3='/storage2/tanghaibao/pistachio/mapping'

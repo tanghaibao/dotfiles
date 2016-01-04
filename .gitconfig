@@ -1,6 +1,6 @@
 [user]
-	email = tanghaibao@gmail.com
-	name = Haibao Tang
+    email = tanghaibao@gmail.com
+    name = Haibao Tang
 
 [alias]
     ci = commit -a
@@ -12,7 +12,7 @@
 
     logy = log --since='2 days ago'
     logw = log --since='1 week ago'
-	unadd = reset HEAD
+    unadd = reset HEAD
 
 [apply]
     whitespace = strip
@@ -28,7 +28,10 @@
     color = auto
 
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+    diff = auto
+    status = auto
+    branch = auto
     ui = auto
+
+[url "https://"]
+    insteadOf = git://

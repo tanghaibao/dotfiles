@@ -2,7 +2,8 @@
 syntax on
 
 " This will allow paste'ing > 50 lines
-set viminfo='100,<100,s10,h
+"set viminfo='100,<100,s10,h
+set viminfo='100,h
 " Fix backspace won't move from current line
 set backspace=indent,eol,start
 set tags=tags;/
