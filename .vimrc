@@ -1,9 +1,19 @@
+" Instructions from https://github.com/zah/nim.vim
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 " Syntax highlight
 syntax on
 
 " This will allow paste'ing > 50 lines
-"set viminfo='100,<100,s10,h
-set viminfo='100,h
+set viminfo='100,<100,s10,h
 " Fix backspace won't move from current line
 set backspace=indent,eol,start
 set tags=tags;/
