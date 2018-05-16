@@ -3,6 +3,8 @@ execute pathogen#infect()
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+set laststatus=2
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -22,7 +24,7 @@ set tags=tags;/
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set textwidth=80
+set textwidth=79
 
 set ignorecase
 set autoindent
