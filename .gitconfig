@@ -32,5 +32,3 @@
 	status = auto
 	branch = auto
     ui = auto
-[core]
-	editor = mvim -f
