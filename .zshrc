@@ -108,6 +108,4 @@ export PATH
 #PYTHONPATH=/Users/htang/miniconda2/lib/python2.7/site-packages:$PYTHONPATH
 PYTHONPATH=$HOME/code:$PYTHONPATH
 export PYTHONPATH
-
-export LC_ALL="C"
 export GITHUB_TOKEN="094d240f481b1981b71c96c6a88562484d3730ff"
